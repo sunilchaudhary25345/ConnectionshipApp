@@ -1,4 +1,5 @@
 using System.Reflection.Metadata.Ecma335;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Situationships.API.Data;
@@ -6,9 +7,8 @@ using Situationships.API.Entities;
 
 namespace Situationships.API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")] // api/users
-    public class UsersController : ControllerBase
+    [Authorize]
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
 
@@ -17,6 +17,7 @@ namespace Situationships.API.Controllers
             _context = context;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
@@ -25,9 +26,9 @@ namespace Situationships.API.Controllers
 
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id) 
+        public async Task<ActionResult<AppUser>> GetUser(int id)
         {
-           return await _context.Users.FindAsync(id);
+            return await _context.Users.FindAsync(id);
         }
     }
 }
