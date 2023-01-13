@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Situationships.API.Data;
+using Situationships.API.Helpers;
 using Situationships.API.Interfaces;
 using Situationships.API.Services;
 
@@ -17,6 +18,8 @@ namespace Situationships.API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.AddScoped<IPhotoService, PhotoService>();
 
             return services;
         }
