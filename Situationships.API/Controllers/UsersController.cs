@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Situationships.API.DTOs;
 using Situationships.API.Entities;
 using Situationships.API.Extensions;
+using Situationships.API.Helpers;
 using Situationships.API.Interfaces;
 
 namespace Situationships.API.Controllers
@@ -24,9 +25,19 @@ namespace Situationships.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
+        public async Task<ActionResult<PageList<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
         {
-            var users = await _userRepository.GetMembersAsync();
+            var currentUser = await _userRepository.GetUserByUsernameAsync(User.GetUsername());
+            userParams.CurrentUsername = currentUser.UserName;
+
+            if (string.IsNullOrWhiteSpace(userParams.Gender))
+            {
+                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+            }
+            
+            var users = await _userRepository.GetMembersAsync(userParams);
+
+            Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages)); 
 
             return Ok(users);
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Situationships.API.DTOs;
 using Situationships.API.Entities;
+using Situationships.API.Helpers;
 
 namespace Situationships.API.Interfaces
 {
@@ -14,7 +15,7 @@ namespace Situationships.API.Interfaces
         Task<IEnumerable<AppUser>> GetUsersAsync();
         Task<AppUser> GetUserByIdAsync(int id);
         Task<AppUser> GetUserByUsernameAsync(string username);
-        Task<IEnumerable<MemberDto>> GetMembersAsync();
+        Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams);
         Task<MemberDto> GetMemberAsync(string username);
     }
 }
