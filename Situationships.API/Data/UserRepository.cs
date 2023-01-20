@@ -27,7 +27,7 @@ namespace Situationships.API.Data
             .SingleOrDefaultAsync();
         }
 
-        public async Task<PageList<MemberDto>> GetMembersAsync(UserParams userParams)
+        public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
            var query = _context.Users.AsQueryable();
           query = query.Where(u => u.UserName != userParams.CurrentUsername);
@@ -44,7 +44,7 @@ namespace Situationships.API.Data
             _ => query.OrderByDescending(u => u.LastActive)
           };
                      
-           return await PageList<MemberDto>.CreateAsync(
+           return await PagedList<MemberDto>.CreateAsync(
                 query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider),
                 userParams.PageNumber,
                 userParams.PageSize);        }
