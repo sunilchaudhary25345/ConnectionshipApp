@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using AutoMapper;
+using CloudinaryDotNet.Actions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Situationships.API.DTOs;
@@ -42,6 +43,7 @@ namespace Situationships.API.Controllers
             return Ok(users);
 
         }
+
         [HttpGet("{username}")]
         public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
