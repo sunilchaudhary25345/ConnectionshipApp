@@ -3,6 +3,7 @@ using Situationships.API.Data;
 using Situationships.API.Helpers;
 using Situationships.API.Interfaces;
 using Situationships.API.Services;
+using Situationships.API.SignalR;
 
 namespace Situationships.API.Extensions
 {
@@ -23,6 +24,9 @@ namespace Situationships.API.Extensions
             services.AddScoped<LogUserActivity>();
             services.AddScoped<ILikesRepository, LikesRepository>();
             services.AddScoped<IMessageRepository, MessageRepository>();
+            services.AddSignalR();
+            services.AddSingleton<PresenceTracker>();
+
             return services;
         }
     }
