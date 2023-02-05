@@ -30,7 +30,7 @@ const routes: Routes = [
       { path: 'admin', component: AdminPanelComponent, canActivate: [AdminGuard]},
     ]
   },
-  { path: 'errors', component: TestErrorComponent },
+  // { path: 'errors', component: TestErrorComponent },
   { path: 'not-found', component: NotFoundComponent },
   { path: 'server-error', component: ServerErrorComponent },
   { path: '**', component: HomeComponent, pathMatch: 'full' }
